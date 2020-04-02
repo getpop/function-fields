@@ -10,7 +10,6 @@ class OneYearCacheControlDirectiveResolver extends AbstractCacheControlDirective
         return [
             'sprintf',
             'concat',
-            'echo',
             'divide',
             'arrayRandom',
             'arrayJoin',

@@ -16,7 +16,6 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
         return [
             'sprintf',
             'concat',
-            'echo',
             'divide',
             'arrayRandom',
             'arrayJoin',
@@ -39,7 +38,6 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
         $types = [
             'sprintf' => SchemaDefinition::TYPE_STRING,
             'concat' => SchemaDefinition::TYPE_STRING,
-            'echo' => SchemaDefinition::TYPE_MIXED,
             'divide' => SchemaDefinition::TYPE_FLOAT,
             'arrayRandom' => SchemaDefinition::TYPE_MIXED,
             'arrayJoin' => SchemaDefinition::TYPE_STRING,
@@ -64,7 +62,6 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
         $descriptions = [
             'sprintf' => $translationAPI->__('Replace placeholders inside a string with provided values', 'function-fields'),
             'concat' => $translationAPI->__('Concatenate two or more strings', 'function-fields'),
-            'echo' => $translationAPI->__('Repeat back the input, whatever it is', 'function-fields'),
             'divide' => $translationAPI->__('Divide a number by another number', 'function-fields'),
             'arrayRandom' => $translationAPI->__('Randomly select one element from the provided ones', 'function-fields'),
             'arrayJoin' => $translationAPI->__('Join all the strings in an array, using a provided separator', 'function-fields'),
@@ -115,19 +112,6 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
                             SchemaDefinition::ARGNAME_NAME => 'values',
                             SchemaDefinition::ARGNAME_TYPE => TypeCastingHelpers::makeArray(SchemaDefinition::TYPE_STRING),
                             SchemaDefinition::ARGNAME_DESCRIPTION => $translationAPI->__('Strings to concatenate', 'function-fields'),
-                            SchemaDefinition::ARGNAME_MANDATORY => true,
-                        ],
-                    ]
-                );
-
-            case 'echo':
-                return array_merge(
-                    $schemaFieldArgs,
-                    [
-                        [
-                            SchemaDefinition::ARGNAME_NAME => 'value',
-                            SchemaDefinition::ARGNAME_TYPE => SchemaDefinition::TYPE_MIXED,
-                            SchemaDefinition::ARGNAME_DESCRIPTION => $translationAPI->__('The input to be echoed back', 'function-fields'),
                             SchemaDefinition::ARGNAME_MANDATORY => true,
                         ],
                     ]
@@ -408,8 +392,6 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
                     },
                     ''
                 );
-            case 'echo':
-                return $fieldArgs['value'];
             case 'divide':
                 return (float)$fieldArgs['number']/(float)$fieldArgs['by'];
             case 'arrayRandom':
