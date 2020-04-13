@@ -387,13 +387,13 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
             case 'concat':
                 return array_reduce(
                     $fieldArgs['values'],
-                    function($carry, $item) {
-                        return $carry.$item;
+                    function ($carry, $item) {
+                        return $carry . $item;
                     },
                     ''
                 );
             case 'divide':
-                return (float)$fieldArgs['number']/(float)$fieldArgs['by'];
+                return (float)$fieldArgs['number'] / (float)$fieldArgs['by'];
             case 'arrayRandom':
                 return $fieldArgs['array'][array_rand($fieldArgs['array'])];
             case 'arrayJoin':
