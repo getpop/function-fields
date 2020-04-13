@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace PoP\FunctionFields;
 
 use PoP\Root\Component\AbstractComponent;
