@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PoP\FunctionFields\FieldResolvers;
 
-use PoP\FieldQuery\FieldQueryUtils;
+use PoP\ComponentModel\Schema\FieldQueryUtils;
 use PoP\ComponentModel\Schema\SchemaDefinition;
 use PoP\ComponentModel\Schema\TypeCastingHelpers;
 use PoP\Translation\Facades\TranslationAPIFacade;
