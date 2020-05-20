@@ -1,2 +1,2 @@
 <?php
-\PoP\FunctionFields\Component::init();
+//\PoP\FunctionFields\Component::initialize();
