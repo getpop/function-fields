@@ -20,13 +20,13 @@ Via Composer
 composer require getpop/function-fields
 ```
 
-<!--
 ## Usage
 
-``` php
+Initialize the component:
 
+``` php
+\PoP\FunctionFields\Component::initialize();
 ```
--->
 
 ## Standards
 
