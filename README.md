@@ -25,7 +25,9 @@ composer require getpop/function-fields
 Initialize the component:
 
 ``` php
-\PoP\FunctionFields\Component::initialize();
+\PoP\Root\ComponentLoader::initializeComponents([
+    \PoP\FunctionFields\Component::class,
+]);
 ```
 
 ## Standards
