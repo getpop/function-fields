@@ -59,6 +59,32 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
         return $types[$fieldName] ?? parent::getSchemaFieldType($typeResolver, $fieldName);
     }
 
+    public function isSchemaFieldResponseNonNullable(TypeResolverInterface $typeResolver, string $fieldName): bool
+    {
+        $nonNullableFieldNames = [
+            'sprintf',
+            'concat',
+            'divide',
+            'arrayRandom',
+            'arrayJoin',
+            'arrayItem',
+            'arraySearch',
+            'arrayFill',
+            'arrayValues',
+            'arrayUnique',
+            'arrayDiff',
+            'arrayAddItem',
+            'arrayAsQueryStr',
+            'upperCase',
+            'lowerCase',
+            'titleCase',
+        ];
+        if (in_array($fieldName, $nonNullableFieldNames)) {
+            return true;
+        }
+        return parent::isSchemaFieldResponseNonNullable($typeResolver, $fieldName);
+    }
+
     public function getSchemaFieldDescription(TypeResolverInterface $typeResolver, string $fieldName): ?string
     {
         $translationAPI = TranslationAPIFacade::getInstance();
