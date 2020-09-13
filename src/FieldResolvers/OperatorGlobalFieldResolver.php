@@ -17,7 +17,6 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
     public static function getFieldNamesToResolve(): array
     {
         return [
-            'sprintf',
             'concat',
             'divide',
             'arrayRandom',
@@ -39,7 +38,6 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
     public function getSchemaFieldType(TypeResolverInterface $typeResolver, string $fieldName): ?string
     {
         $types = [
-            'sprintf' => SchemaDefinition::TYPE_STRING,
             'concat' => SchemaDefinition::TYPE_STRING,
             'divide' => SchemaDefinition::TYPE_FLOAT,
             'arrayRandom' => SchemaDefinition::TYPE_MIXED,
@@ -62,7 +60,6 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
     public function isSchemaFieldResponseNonNullable(TypeResolverInterface $typeResolver, string $fieldName): bool
     {
         $nonNullableFieldNames = [
-            'sprintf',
             'concat',
             'divide',
             'arrayRandom',
@@ -89,7 +86,6 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
     {
         $translationAPI = TranslationAPIFacade::getInstance();
         $descriptions = [
-            'sprintf' => $translationAPI->__('Replace placeholders inside a string with provided values', 'function-fields'),
             'concat' => $translationAPI->__('Concatenate two or more strings', 'function-fields'),
             'divide' => $translationAPI->__('Divide a number by another number', 'function-fields'),
             'arrayRandom' => $translationAPI->__('Randomly select one element from the provided ones', 'function-fields'),
@@ -114,25 +110,6 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
         $schemaFieldArgs = parent::getSchemaFieldArgs($typeResolver, $fieldName);
         $translationAPI = TranslationAPIFacade::getInstance();
         switch ($fieldName) {
-            case 'sprintf':
-                return array_merge(
-                    $schemaFieldArgs,
-                    [
-                        [
-                            SchemaDefinition::ARGNAME_NAME => 'string',
-                            SchemaDefinition::ARGNAME_TYPE => SchemaDefinition::TYPE_STRING,
-                            SchemaDefinition::ARGNAME_DESCRIPTION => $translationAPI->__('The string containing the placeholders', 'function-fields'),
-                            SchemaDefinition::ARGNAME_MANDATORY => true,
-                        ],
-                        [
-                            SchemaDefinition::ARGNAME_NAME => 'values',
-                            SchemaDefinition::ARGNAME_TYPE => TypeCastingHelpers::makeArray(SchemaDefinition::TYPE_STRING),
-                            SchemaDefinition::ARGNAME_DESCRIPTION => $translationAPI->__('The values to replace the placeholders with inside the string', 'function-fields'),
-                            SchemaDefinition::ARGNAME_MANDATORY => true,
-                        ],
-                    ]
-                );
-
             case 'concat':
                 return array_merge(
                     $schemaFieldArgs,
@@ -425,8 +402,6 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
         array $options = []
     ) {
         switch ($fieldName) {
-            case 'sprintf':
-                return sprintf($fieldArgs['string'], ...$fieldArgs['values']);
             case 'concat':
                 return array_reduce(
                     $fieldArgs['values'],
