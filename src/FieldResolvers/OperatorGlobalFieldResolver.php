@@ -335,10 +335,10 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
         return $schemaFieldArgs;
     }
 
-    public function resolveSchemaValidationErrorDescription(TypeResolverInterface $typeResolver, string $fieldName, array $fieldArgs = []): ?string
+    public function resolveSchemaValidationErrorDescriptions(TypeResolverInterface $typeResolver, string $fieldName, array $fieldArgs = []): ?array
     {
-        if ($error = parent::resolveSchemaValidationErrorDescription($typeResolver, $fieldName, $fieldArgs)) {
-            return $error;
+        if ($errors = parent::resolveSchemaValidationErrorDescriptions($typeResolver, $fieldName, $fieldArgs)) {
+            return $errors;
         }
 
         // Important: The validations below can only be done if no fieldArg contains a field!
@@ -350,22 +350,28 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
             switch ($fieldName) {
                 case 'arrayItem':
                     if (count($fieldArgs['array']) < $fieldArgs['position']) {
-                        return sprintf(
-                            $translationAPI->__('The array contains no element at position \'%s\'', 'function-fields'),
-                            $fieldArgs['position']
-                        );
+                        return [
+                            sprintf(
+                                $translationAPI->__('The array contains no element at position \'%s\'', 'function-fields'),
+                                $fieldArgs['position']
+                            ),
+                        ];
                     };
                     return null;
                 case 'arrayDiff':
                     if (count($fieldArgs['arrays']) < 2) {
-                        return sprintf(
-                            $translationAPI->__('The array must contain at least 2 elements: \'%s\'', 'function-fields'),
-                            json_encode($fieldArgs['arrays'])
-                        );
+                        return [
+                            sprintf(
+                                $translationAPI->__('The array must contain at least 2 elements: \'%s\'', 'function-fields'),
+                                json_encode($fieldArgs['arrays'])
+                            ),
+                        ];
                     };
                 case 'divide':
                     if ($fieldArgs['by'] === (float)0) {
-                        return $translationAPI->__('Cannot divide by 0', 'function-fields');
+                        return [
+                            $translationAPI->__('Cannot divide by 0', 'function-fields'),
+                        ];
                     }
                     // Check that all items are arrays
                     // This doesn't work before resolving the args! So doing arrayDiff([echo($langs),[en]]) fails
