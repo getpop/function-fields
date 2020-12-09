@@ -453,7 +453,7 @@ class OperatorGlobalFieldResolver extends AbstractGlobalFieldResolver
                 return array_diff($first, ...$arrays);
             case 'arrayAddItem':
                 $array = $fieldArgs['array'];
-                if ($fieldArgs['key']) {
+                if ($fieldArgs['key'] ?? null) {
                     $array[$fieldArgs['key']] = $fieldArgs['value'];
                 } else {
                     $array[] = $fieldArgs['value'];
